@@ -3,8 +3,6 @@ package com.JPA.stock.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -15,12 +13,15 @@ import javax.persistence.Table;
 public class Stock {
 
 	// CompoundKey compoundKey;
-	private int stock_id;
-	private String stockName;
-	private List<Data> data;
 
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int stock_id;
+	@Id
+	private String stockName;
 	@OneToMany
 	@JoinColumn
+	private List<Data> data;
+
 	public List<Data> getData() {
 		return data;
 	}
@@ -45,8 +46,6 @@ public class Stock {
 //		this.stockName = stockName;
 //	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getStock_id() {
 		return stock_id;
 	}

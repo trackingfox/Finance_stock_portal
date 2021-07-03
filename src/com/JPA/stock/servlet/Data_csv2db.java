@@ -80,6 +80,8 @@ public class Data_csv2db {
 			// 3.convert customertemp list to customer list
 			Data cust2 = new Data();
 
+			cust2.setDate(cust.getDate());
+
 			Float c = Float.valueOf(cust.getHigh_price());
 			cust2.setHigh_price(c);
 
@@ -122,6 +124,8 @@ public class Data_csv2db {
 		datalist1 = datalist.stream().map(cust -> {
 
 			Data cust2 = new Data();
+
+			cust2.setDate(cust.getDate());
 
 			Float c = Float.valueOf(cust.getHigh_price());
 			cust2.setHigh_price(c);

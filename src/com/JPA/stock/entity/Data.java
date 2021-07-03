@@ -29,7 +29,6 @@ public class Data {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
 	public int getDataId() {
 		return DataId;
 	}
