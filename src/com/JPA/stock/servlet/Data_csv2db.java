@@ -22,14 +22,12 @@ import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 public class Data_csv2db {
 
 	public List<DataTemp> DatacsvToclass() {
+		String filename = "D:\\datafolder\\AES_data.csv";
+		return DatacsvToclass(filename);
 
-		// CustomerNumber, CustomerName, ContactLastName, ContactFirstName,Phone,
-		// AddressLine1,
-		// AddressLine2, City, State, PostalCode,Country
-		// SalesRepoEmployeeNumber, CreditLimit
+	}
 
-		// "customerNumber","customerName","contactLastName","contactFirstName","phone","addressLine1",
-		// "addressLine2","city","state","postalCode","country","salesRepEmployeeNumber","creditLimit"
+	public List<DataTemp> DatacsvToclass(String filename) {
 
 		// create a hashmap of column header to class attribute
 		Map<String, String> mapper = new HashMap<String, String>();
@@ -41,7 +39,7 @@ public class Data_csv2db {
 		mapper.put("Close", "close_price");
 
 		// HeaderColumnNameTranslateMappingStrategy
-		// for Country class
+
 		HeaderColumnNameTranslateMappingStrategy<DataTemp> strategy = new HeaderColumnNameTranslateMappingStrategy<DataTemp>();
 		strategy.setType(DataTemp.class);
 		strategy.setColumnMapping(mapper);
@@ -49,7 +47,7 @@ public class Data_csv2db {
 		// csvReader
 		CSVReader csvReader = null;
 		try {
-			csvReader = new CSVReader(new FileReader("D:\\datafolder\\AES_data.csv"));
+			csvReader = new CSVReader(new FileReader(filename));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,63 +58,19 @@ public class Data_csv2db {
 
 		// call the parse method
 		List<DataTemp> datalist = csvBean.parse(strategy, csvReader);
-//			for (CustomerTemp customerDb : customerlist) {
-//				System.out.println(customerDb);
-		//
-//			}
 
 		return datalist;
 	}
 
-	// @Test
 	public List<Data> DataDetails() {
-		List<DataTemp> datalist = DatacsvToclass();
-		// Convert customertemp objects, customertemp list to customer list
-//			List<Customer> custlist1 = custlist.stream().map(x -> x.getSalesRepoEmployeeNumber().equals("") ? null
-//					: Integer.parseInt(x.getSalesRepoEmployeeNumber())).collect(Collectors.toList());
+		String filename = "D:\\datafolder\\AES_data.csv";
+		return DataDetails(filename);
 
-		List<Data> datalist2 = new ArrayList<Data>();
-		for (DataTemp cust : datalist) {
-			// 3.convert customertemp list to customer list
-			Data cust2 = new Data();
+	}
 
-			cust2.setDate(cust.getDate());
-
-			Float c = Float.valueOf(cust.getHigh_price());
-			cust2.setHigh_price(c);
-
-			Float d = Float.valueOf(cust.getLow_price());
-			cust2.setLow_price(d);
-
-			Float e = Float.valueOf(cust.getOpen_price());
-			cust2.setOpen_price(e);
-
-			Float f = Float.valueOf(cust.getClose_price());
-			cust2.setClose_price(f);
-
-			datalist2.add(cust2);
-		}
-
-//			for (Customer customer : custlist2) {
-//				System.out.println(customer);
-		//
-//			}
-
-		// 1.convert customertemp list to customer list using interface
-
-//			CustomerInterface obj1 = new CustomerTemp();
-//			CustomerInterface obj2 = new Customer();
-//			obj2 = obj1;
-		//
-//			Integer temp = obj2.getSalesRepoEmployeeNumber().equals("") ? null
-//					: Integer.valueOf(obj2.getSalesRepoEmployeeNumber());
-//			obj2.setSalesRepoEmployeeNumber(temp);
-		//
-//			int temp2 = Integer.valueOf(obj2.getCustomerNumber());
-//			obj2.setCustomerNumber(temp2);
-		//
-//			Float temp3 = Float.valueOf(obj2.getCreditLimit());
-//			obj2.setCreditLimit(temp3);
+	// @Test
+	public List<Data> DataDetails(String filename) {
+		List<DataTemp> datalist = DatacsvToclass(filename);
 
 		// 2 convert customertemp list to customer list using stream
 
@@ -142,32 +96,11 @@ public class Data_csv2db {
 			return cust2;
 		}).collect(Collectors.toList());
 
-		for (Data dat : datalist1) {
-			System.out.println(dat);
-
-		}
 		return datalist1;
 	}
 
 	@Test
 	public void importTodb() {
-
-//			SessionFactory sessionFactory = null;
-//			// configures settings from hibernate.cfg.xml
-//			final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-		//
-//			try {
-//				sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-//			} catch (Exception ex) {
-//				System.out.println(ex.toString()); // If error display in console
-//				StandardServiceRegistryBuilder.destroy(registry);
-//			}
-//			Session session = sessionFactory.openSession();
-//			session.beginTransaction();
-//			List<Student> studentlist = this.csvToclass();
-//			studentlist.forEach(x -> session.save(x));
-//			session.getTransaction().commit();
-//			session.close();
 
 		// use persistence.xml configuration
 
@@ -176,7 +109,6 @@ public class Data_csv2db {
 		em.getTransaction().begin();
 
 		List<Data> datalist1 = this.DataDetails();
-//			custlist1.forEach(x -> em.persist(x));
 		datalist1.forEach(x -> em.merge(x));
 		em.getTransaction().commit();
 		em.close();

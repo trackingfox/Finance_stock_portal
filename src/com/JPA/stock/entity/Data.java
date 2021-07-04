@@ -1,5 +1,6 @@
 package com.JPA.stock.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,23 +13,25 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Data")
 public class Data {
-	@Column(name = "DataId")
-	private int DataId;
-	@Column(name = "Date")
-	private String Date;
-	@Column(name = "open_price")
-	private float open_price;
-	@Column(name = "close_price")
-	private float close_price;
-	@Column(name = "high_price")
-	private float high_price;
-	@Column(name = "low_price")
-	private float low_price;
-
-	private Stock stock;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column
+	private int DataId;
+	@Column
+	private String Date;
+	@Column
+	private float open_price;
+	@Column
+	private float close_price;
+	@Column
+	private float high_price;
+	@Column
+	private float low_price;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "stockName")
+	private Stock stock;
+
 	public int getDataId() {
 		return DataId;
 	}
@@ -37,8 +40,6 @@ public class Data {
 		DataId = dataId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "stock_id")
 	public Stock getStock() {
 		return stock;
 	}
@@ -98,8 +99,8 @@ public class Data {
 
 	@Override
 	public String toString() {
-		return "Data [Date=" + Date + ", open_price=" + open_price + ", close_price=" + close_price + ", high_price="
-				+ high_price + ", low_price=" + low_price + "]";
+		return "Data [DataId=" + DataId + ", Date=" + Date + ", open_price=" + open_price + ", close_price="
+				+ close_price + ", high_price=" + high_price + ", low_price=" + low_price + ", stock=" + stock + "]";
 	}
 
 }
