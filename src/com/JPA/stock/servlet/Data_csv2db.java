@@ -7,12 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.junit.Test;
-
 import com.JPA.stock.entity.Data;
 import com.JPA.stock.entity.DataTemp;
 import com.opencsv.CSVReader;
@@ -21,13 +15,13 @@ import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 
 public class Data_csv2db {
 
-	public List<DataTemp> DatacsvToclass() {
-		String filename = "D:\\datafolder\\AES_data.csv";
-		return DatacsvToclass(filename);
+//	public List<DataTemp> DatacsvToclass() {
+//		//String filename = "D:\\datafolder\\AES_data.csv";
+//		return DatacsvToclass(filepath);
+//
+//	}
 
-	}
-
-	public List<DataTemp> DatacsvToclass(String filename) {
+	public List<DataTemp> DatacsvToclass(String filepath) {
 
 		// create a hashmap of column header to class attribute
 		Map<String, String> mapper = new HashMap<String, String>();
@@ -47,7 +41,7 @@ public class Data_csv2db {
 		// csvReader
 		CSVReader csvReader = null;
 		try {
-			csvReader = new CSVReader(new FileReader(filename));
+			csvReader = new CSVReader(new FileReader(filepath));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,15 +56,15 @@ public class Data_csv2db {
 		return datalist;
 	}
 
-	public List<Data> DataDetails() {
-		String filename = "D:\\datafolder\\AES_data.csv";
-		return DataDetails(filename);
-
-	}
+//	public List<Data> DataDetails() {
+//		String filename = "D:\\datafolder\\AES_data.csv";
+//		return DataDetails(filename);
+//
+//	}
 
 	// @Test
-	public List<Data> DataDetails(String filename) {
-		List<DataTemp> datalist = DatacsvToclass(filename);
+	public List<Data> DataDetails(String filepath) {
+		List<DataTemp> datalist = DatacsvToclass(filepath);
 
 		// 2 convert customertemp list to customer list using stream
 
@@ -99,21 +93,21 @@ public class Data_csv2db {
 		return datalist1;
 	}
 
-	@Test
-	public void importTodb() {
-
-		// use persistence.xml configuration
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_Stock_Data");
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-
-		List<Data> datalist1 = this.DataDetails();
-		datalist1.forEach(x -> em.merge(x));
-		em.getTransaction().commit();
-		em.close();
-		emf.close();
-
-	}
+	// @Test
+//	public void importTodb() {
+//
+//		// use persistence.xml configuration
+//
+//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_Stock_Data");
+//		EntityManager em = emf.createEntityManager();
+//		em.getTransaction().begin();
+//
+//		// List<Data> datalist1 = this.DataDetails();
+//		datalist1.forEach(x -> em.merge(x));
+//		em.getTransaction().commit();
+//		em.close();
+//		emf.close();
+//
+//	}
 
 }
