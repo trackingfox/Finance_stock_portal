@@ -82,6 +82,7 @@ public class Stock_csv2db {
 
 		Stock st = new Stock();
 		Data_csv2db datacsv = new Data_csv2db();
+		// System.out.println(x + " : " + y);
 
 		st.setStockName(x);
 		st.setData(datacsv.DataDetails(y));
@@ -106,10 +107,11 @@ public class Stock_csv2db {
 				// System.out.println(f.getName() + f.getPath());
 //				fileName.add(f.getName().substring(0, f.getName().lastIndexOf('_')));
 //				filePath.add(f.getPath());
-
-				hashmap.put(f.getName().substring(0, f.getName().lastIndexOf('_')), f.getPath());
-				System.out.println(f.getPath());
-				System.out.println(f.getName().substring(0, f.getName().lastIndexOf('_')));
+				String fileName = f.getName().substring(0, f.getName().lastIndexOf('_'));
+				String filePath = f.getPath();
+				hashmap.put(fileName, filePath);
+//				System.out.println(fileName);
+//				System.out.println(filePath);
 
 			}
 		}
@@ -118,7 +120,7 @@ public class Stock_csv2db {
 		for (Map.Entry<String, String> hm : entries) {
 			String x = hm.getKey();
 			String y = hm.getValue();
-			System.out.println(x = " : " + y);
+//			System.out.println(x + " : " + y);
 		}
 
 		return hashmap;
@@ -155,7 +157,6 @@ public class Stock_csv2db {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_Stock_Data");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-
 		// List<Stock> stocklist1 = this.StockDetails();
 		// stocklist1.forEach(x -> em.merge(x));
 
@@ -168,10 +169,13 @@ public class Stock_csv2db {
 		for (Map.Entry<String, String> hm : entries) {
 			String x = hm.getKey();
 			String y = hm.getValue();
+			// System.out.println(x + " : " + y);
 			Stock s = this.stock_name_detail(x, y);
+
 			em.merge(s);
-			em.getTransaction().commit();
+
 		}
+		em.getTransaction().commit();
 
 		// FETCHING DATA FROM DATABASE
 		// retrieval by class and primary key

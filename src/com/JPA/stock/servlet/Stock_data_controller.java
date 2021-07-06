@@ -7,8 +7,6 @@ import java.util.Queue;
 
 import org.junit.Test;
 
-import com.JPA.stock.entity.Data;
-
 public class Stock_data_controller {
 
 	private final Queue<Double> window = new LinkedList<>();
@@ -37,14 +35,14 @@ public class Stock_data_controller {
 
 	@Test
 	public void MovingAverage() {
-		List<Data> high_list = new ArrayList<Data>();
+		// List<Data> high_list = new ArrayList<Data>();
 		List<Double> high = new ArrayList<Double>();
-
-		for (Data data1 : high_list) {
-			high.add((double) data1.getHigh_price());
+		// high = highPriceList();
+		for (Double data2 : high) {
+			System.out.println(data2);
 		}
 		// double[] testData = { 1, 2, 3, 4, 5, 5, 4, 3, 2, 1 };
-		int[] windowSizes = { 3, 9, 15, 7, 4 };
+		int[] windowSizes = { 3 };
 
 		for (int windSize : windowSizes) {
 			Stock_data_controller ma = new Stock_data_controller();

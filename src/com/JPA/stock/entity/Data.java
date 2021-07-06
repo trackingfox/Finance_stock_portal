@@ -1,13 +1,14 @@
 package com.JPA.stock.entity;
 
-import javax.persistence.CascadeType;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +19,7 @@ public class Data {
 	@Column
 	private int DataId;
 	@Column
-	private String Date;
+	private Date Date;
 	@Column
 	private float open_price;
 	@Column
@@ -28,9 +29,9 @@ public class Data {
 	@Column
 	private float low_price;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "stockName")
-	private Stock stock;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "stockName")
+//	private Stock stock;
 
 	public int getDataId() {
 		return DataId;
@@ -40,13 +41,13 @@ public class Data {
 		DataId = dataId;
 	}
 
-	public Stock getStock() {
-		return stock;
-	}
-
-	public void setStock(Stock stock) {
-		this.stock = stock;
-	}
+//	public Stock getStock() {
+//		return stock;
+//	}
+//
+//	public void setStock(Stock stock) {
+//		this.stock = stock;
+//	}
 
 //	public Data(int date, float open_price, float close_price, float high_price, float low_price) {
 //		super();
@@ -57,12 +58,21 @@ public class Data {
 //		this.low_price = low_price;
 //	}
 
-	public String getDate() {
+	public Date getDate() {
+
 		return Date;
 	}
 
 	public void setDate(String date) {
-		Date = date;
+		Date date1 = null;
+		try {
+			date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+		} catch (ParseException e) {
+
+			e.printStackTrace();
+		}
+
+		this.Date = date1;
 	}
 
 	public float getOpen_price() {
@@ -100,7 +110,7 @@ public class Data {
 	@Override
 	public String toString() {
 		return "Data [DataId=" + DataId + ", Date=" + Date + ", open_price=" + open_price + ", close_price="
-				+ close_price + ", high_price=" + high_price + ", low_price=" + low_price + ", stock=" + stock + "]";
+				+ close_price + ", high_price=" + high_price + ", low_price=" + low_price + "]";
 	}
 
 }

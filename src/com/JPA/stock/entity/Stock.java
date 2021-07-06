@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,7 +18,8 @@ public class Stock {
 	@Id
 	private String stockName;
 
-	@OneToMany(mappedBy = "stock", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "stockName")
 	private List<Data> data;
 
 	public List<Data> getData() {

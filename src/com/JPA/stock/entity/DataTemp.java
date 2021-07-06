@@ -41,12 +41,25 @@ public class DataTemp {
 //		this.low_price = low_price;
 //	}
 
+//	public Date getDate() {
+//		Date date1 = null;
+//		try {
+//			date1 = new SimpleDateFormat("dd/MM/yyyy").parse(Date);
+//		} catch (ParseException e) {
+//
+//			e.printStackTrace();
+//		}
+//		return date1;
+//	}
+
 	public String getDate() {
 		return Date;
+
 	}
 
 	public void setDate(String date) {
-		Date = date;
+		this.Date = date;
+
 	}
 
 	public float getOpen_price() {

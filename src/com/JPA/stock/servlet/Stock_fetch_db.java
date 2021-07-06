@@ -1,12 +1,16 @@
 package com.JPA.stock.servlet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import org.junit.Test;
 
-import com.JPA.stock.entity.Stock;
+import com.JPA.stock.entity.Data;
 
 public class Stock_fetch_db {
 
@@ -19,10 +23,10 @@ public class Stock_fetch_db {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
-		Stock stock1 = em.find(Stock.class, x);
-		// Data data1 = em.find(Data.class, 1);
-		System.out.println("stock name :: " + stock1.getStockName());
-		System.out.println("stock data :: " + stock1.getData().toString());
+//		Stock stock1 = em.find(Stock.class, "AES");
+//	    Data data1 = em.find(Data.class, 1);
+//		System.out.println("stock name :: " + stock1.getStockName());
+//		System.out.println("stock data :: " + stock1.getData().toString());
 
 		// FETCHING DATA FROM DATABASE
 		// retrieval by class and primary key
@@ -41,8 +45,20 @@ public class Stock_fetch_db {
 
 		// retrieval by query(JPQL)
 
-//				Query query = em.createQuery("SELECT * FROM Stock, Data where Stock.stockName=Data.stockName");
-//				List results = query.getResultList();
+		Query query = em.createQuery(
+				"FROM Data where stockName='A' AND open_price>69 AND  open_price<72 AND Date BETWEEN '2019-01-11' AND '2019-01-17' ");
+		List<Data> results = query.getResultList();
+
+		for (Data obj : results) {
+			System.out.println(obj.getDate() + "   " + obj.getHigh_price() + "   " + obj.getLow_price() + "    "
+					+ obj.getOpen_price() + "    " + obj.getClose_price());
+
+		}
+		// highPriceList() function
+		List<Double> highList = new ArrayList<Double>();
+		for (Data obj : results) {
+			highList.add((double) obj.getHigh_price());
+		}
 
 		em.close();
 		emf.close();

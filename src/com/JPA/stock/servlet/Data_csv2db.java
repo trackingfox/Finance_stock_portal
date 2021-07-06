@@ -64,6 +64,7 @@ public class Data_csv2db {
 
 	// @Test
 	public List<Data> DataDetails(String filepath) {
+		// System.out.println(filepath);
 		List<DataTemp> datalist = DatacsvToclass(filepath);
 
 		// 2 convert customertemp list to customer list using stream
